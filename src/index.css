@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-heading: 'Sora', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #070e0b;
+    color: #e2e8f0;
+  }
+
+  /* so anchored sections don't hide under the sticky navbar */
+  section[id] {
+    scroll-margin-top: 4rem;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #080f0c;
+}
+::-webkit-scrollbar-thumb {
+  background: #254434;
+  border-radius: 9999px;
+  border: 2px solid #080f0c;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f6e54;
+}
+
+/* Subtle grid background (used in the dark Hero only) */
+.bg-cyber-grid {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(46, 82, 64, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(46, 82, 64, 0.08) 1px, transparent 1px);
+}
+
+.glass-nav {
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* =====================================================================
+   THEME: mix of white / black / green
+   ---------------------------------------------------------------------
+   Hero, Navbar and Footer are always dark.
+   Every other section has a "tone":
+     .tone-a      -> white by default, black when inverted
+     .tone-b      -> black by default, white when inverted
+     .tone-green  -> always green
+   The navbar switch toggles the `flipped` class on <html>.
+   ===================================================================== */
+
+/* WHITE palette (plain, smooth white - no grid) */
+.tone-a,
+html.flipped .tone-b {
+  --sec-bg: #ffffff;
+  --card-bg: #f6faf8;
+  --tile-bg: #e8f4ed;
+  --tile-hover: #d9eee2;
+  --border: #cfe3d7;
+  --border-hover: #2fae78;
+  --heading: #0a120e;
+  --text: #34443b;
+  --muted: #5a6b61;
+  --accent: #047857;
+  --tint-bg: rgba(16, 185, 129, 0.1);
+  --tint-border: rgba(5, 150, 105, 0.35);
+  --btn-bg: linear-gradient(90deg, #059669, #047857);
+  --btn-text: #ffffff;
+}
+
+/* BLACK palette */
+.tone-b,
+html.flipped .tone-a {
+  --sec-bg: #060a08;
+  --card-bg: #0d1612;
+  --tile-bg: #13211a;
+  --tile-hover: #1a3025;
+  --border: rgba(16, 185, 129, 0.22);
+  --border-hover: rgba(52, 211, 153, 0.55);
+  --heading: #ffffff;
+  --text: #c9d6cf;
+  --muted: #8fa197;
+  --accent: #34d399;
+  --tint-bg: rgba(16, 185, 129, 0.12);
+  --tint-border: rgba(52, 211, 153, 0.35);
+  --btn-bg: linear-gradient(90deg, #10b981, #0d9488);
+  --btn-text: #04120b;
+}
+
+/* GREEN palette (same in both modes) */
+.tone-green {
+  --sec-bg: linear-gradient(135deg, #064e3b 0%, #047857 100%);
+  --card-bg: rgba(255, 255, 255, 0.09);
+  --tile-bg: rgba(255, 255, 255, 0.14);
+  --tile-hover: rgba(255, 255, 255, 0.2);
+  --border: rgba(255, 255, 255, 0.22);
+  --border-hover: rgba(255, 255, 255, 0.6);
+  --heading: #ffffff;
+  --text: #e6fbf0;
+  --muted: #a7e6c8;
+  --accent: #a7f3d0;
+  --tint-bg: rgba(255, 255, 255, 0.14);
+  --tint-border: rgba(255, 255, 255, 0.3);
+  --btn-bg: #ffffff;
+  --btn-text: #065f46;
+}
+
+/* Semantic helpers that read the palette above.
+   (in the components layer so real Tailwind utilities can still override them) */
+@layer components {
+  .t-section { background: var(--sec-bg); color: var(--text); }
+  .t-card { background: var(--card-bg); border-color: var(--border); }
+  .t-card:hover { border-color: var(--border-hover); }
+  .t-tile { background: var(--tile-bg); }
+  .t-hover-tile:hover { background: var(--tile-hover); }
+  .t-divider { border-color: var(--border); }
+  .t-hover-border:hover { border-color: var(--border-hover); }
+  .group:hover .t-group-hover-border { border-color: var(--border-hover); }
+  .t-heading { color: var(--heading); }
+  .t-text { color: var(--text); }
+  .t-muted { color: var(--muted); }
+  .t-accent { color: var(--accent); }
+  .t-hover-accent:hover { color: var(--accent); }
+  .group:hover .t-title-hover { color: var(--accent); }
+  .t-tint { background: var(--tint-bg); }
+  .t-border-tint { border-color: var(--tint-border); }
+  .t-btn { background: var(--btn-bg); color: var(--btn-text); }
+  .t-btn:hover { filter: brightness(1.08); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes floatRev {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(14px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.08); }
+}
+
+@keyframes orbMove1 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(120px, 80px) scale(1.15); }
+  100% { transform: translate(-60px, 140px) scale(0.95); }
+}
+
+@keyframes orbMove2 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(-100px, -60px) scale(1.2); }
+  100% { transform: translate(80px, -110px) scale(0.9); }
+}
+
+.animate-float-slow {
+  animation: float 7s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: floatRev 8s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 5s ease-in-out infinite;
+}
+
+.animate-orb-move-1 {
+  animation: orbMove1 22s ease-in-out infinite alternate;
+}
+
+.animate-orb-move-2 {
+  animation: orbMove2 26s ease-in-out infinite alternate;
+}
